@@ -1,0 +1,288 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ค้นหาจากสายพันธุ์</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/icon4.png') }}">
+    
+
+    
+
+<!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"> -->
+<!--   <link rel="stylesheet" type="text/css" href="assets/css/home.css" />  -->
+
+      <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet"> 
+      <link href="{{ url_for('static', filename='css/main_data.css') }}" rel="stylesheet"> 
+      <link href="{{ url_for('static', filename='css/layout.css') }}" rel="stylesheet"> 
+
+
+
+
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+          <script  src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+
+
+
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>   
+  <script type="text/javascript">
+    
+    $(document).ready(function(){
+        $('#datashow').hide(); 
+        $('#breed').hide();  
+        $('#show_img_cat').hide();  
+
+
+
+
+
+
+             var images = ["1.jpg", "2.jpg","3.png","4.jpg","5.jpg", "6.jpg","7.jpg","8.jpg", "9.jpg","10.jpg","11.jpg", "12.jpg","13.jpg","14.jpg", "15.jpg","16.jpg","17.jpg", "18.jpg","19.jpg","20.jpg", "21.jpg","22.jpg","23.jpg", "24.jpg","25.jpg","26.jpg", "27.jpg","28.jpg","29.jpg", "30.jpg","31.jpg","32.jpg", "33.jpg","34.jpg","35.jpg", "36.jpg","37.jpg","38.jpg","39.jpeg","40.jpg","41.jpg", "42.jpg","43.jpg","44.jpg","45.jpg", "46.jpg","47.jpg","48.jpg", "49.jpg","50.jpg","51.jpg", "52.jpg","53.jpg","54.jpg", "55.jpg","56.jpg","57.jpg", "58.jpg","59.jpg","60.jpg"];
+            var i = 0;
+       
+            var base = "{{url_for('static', filename='images/replace')}}"
+            var url = base.replace('replace',images[i]);
+
+       
+            $("#dvImage").css("background-image", "url(" + url + ")");
+
+            
+      
+            setInterval(function () {
+                i++;
+
+                if (i == images.length) {
+                    i = 0;
+
+                }
+
+    
+       
+
+      $("#catbreed").change(function(){
+        a = document.getElementById("catbreed").value;
+        $('#dvImage').css('width', '0%');
+        $('#dvImage').css('height', '0%');
+
+
+        if(a != "select"){
+
+
+
+        i = 99;
+      
+        $.ajax({
+            type: "POST",
+            cache: false,
+            data:{keyword: a},
+            url: '/dataget',
+            async: true,
+            success: function(data) { 
+
+                data = data.split("'");
+                $('#breed').text(data[1]+" ("+data[0]+")");
+                $('#breed').show() ;
+                $('#app').text('ลักษณะกายภาพ');
+                $('#habit').text('ลักษณะนิสัย');
+                $('#take').text('การเลี้ยงดู');
+                $('#appshow').text(data[2]);
+                $('#habitshow').text(data[3]);
+                $('#takeshow').text(data[4]); 
+                $('#datashow').show();  
+                 
+       
+
+                
+                $('#show_img_cat').attr('src', 'data:image/jpg;base64,'+data[6]) ;
+                $('#show_img_cat').show(); 
+                $('#img_cat1').show() ;
+                $('#img_cat2').show() ;
+                $('#img_cat3').show() ;
+                $("#img_cat1").attr("title","คลิกดูรูปภาพใหญ่");
+                $('#img_cat1').attr('src', 'data:image/jpg;base64,'+data[8]) ;
+                // $("#img_cat1").prop("alt", "คลิกดูรูปภาพใหญ่");
+     
+                $('#img_cat2').attr('src', 'data:image/jpg;base64,'+data[10]) ;
+                $("#img_cat2").attr("title","คลิกดูรูปภาพใหญ่");
+                $('#img_cat3').attr('src', 'data:image/jpg;base64,'+data[12]) ;
+                $("#img_cat3").attr("title","คลิกดูรูปภาพใหญ่");
+
+  
+            },
+            error: function(jqXHR) {
+
+                alert("error: " + jqXHR.status);
+                console.log(jqXHR);
+            }
+        })}
+
+
+     });
+
+
+
+
+                $("#dvImage").fadeOut("slow", function () {
+                        var base = "{{url_for('static', filename='images/replace')}}"
+                        var url = base.replace('replace',images[i]);
+                    $(this).css("background-image", "url(" + url + ")");
+  
+
+
+               
+                    $(this).fadeIn("slow");
+                });
+            }, 1000);
+       
+
+
+
+
+
+
+        $('#img_cat1').click(function(){
+            img1 = document.getElementById('img_cat1').src ;
+            
+            $('#show_img_cat').attr('src', img1) ;
+            
+
+
+     
+
+        });
+
+        $('#img_cat2').click(function(){
+            img2 = document.getElementById('img_cat2').src ;
+            $('#show_img_cat').attr('src', img2) ;
+        });
+
+        $('#img_cat3').click(function(){
+            img3 = document.getElementById('img_cat3').src ;
+            $('#show_img_cat').attr('src', img3) ;
+        });
+
+
+
+     
+   });
+  </script>
+
+</head>
+
+<body>
+<div class="wrapper row1">
+    <header id="header" class="hoc clear"> 
+      <!-- ################################################################################################ -->
+      <div id="logo" class="fl_left">
+        <h1><a "text-decoration: none" href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='images/icon4.png') }}" style="width: 40px" />&ensp;CAT BREED CLASSIFIER</a></h1>
+      </div>
+      <nav id="mainav" class="fl_right">
+        <ul class="clear">
+          <li class="active"><a href="{{ url_for('index') }}">จำแนกสายพันธุ์แมว</a></li>
+          <li><a "text-decoration: none" class="drop" href="#">ข้อมูลแมว</a>
+            <ul>
+              <li><a href="{{ url_for('StartCatInformation') }}">ค้นหาจากสายพันธุ์</a></li>
+              <li><a href="{{ url_for('StartCatInformationSearch') }}">ค้นหาจากลักษณะ</a></li>
+            </ul>
+          </li>
+          
+        </ul>
+      </nav>
+      <!-- ################################################################################################ -->
+    </header>
+  </div>
+    <div >
+        <div class="limiter">
+    <div class="container-login100" style=" background-image: url({{ url_for('static', filename='images/bg4.jpg') }});height: 1800px;">
+    
+<!--       <div class="wrap-login100"> -->
+      <div id = "data" >
+        <form >
+     <!--      <center><P>ข้อมูลแมว</P></center> -->
+         <br><h3 align="center" id = 'breed' ></h3><br>
+          <center><img  id = "show_img_cat" src="https://www.readersdigest.ca/wp-content/uploads/sites/14/2011/01/4-ways-cheer-up-depressed-cat.jpg" height= '200px' width = '250px'></center>
+
+          <center><div id="dvImage" style="height: 400px; width: 700px" border = "1px"></div></center>
+
+          
+
+          
+          <br><br>
+
+          <center><select id = 'catbreed' class="dropdawn">
+              <option value="select" >---เลือกสายพันธุ์---</option>
+              <option value="Khao Manee">ขาวมณี</option> 
+              <option value="Korat">โคราช</option>
+              <option value="British Shorthair">บริติชขนสั้น</option>
+              <option value="Bombay">บอมเบย์</option>
+              <option value="Bengol" >เบงกอล</option>
+
+              <option value="Persian">เปอร์เซีย</option>
+              <option value="Munchkin">มันช์กิ้น</option>
+              <option value="Main Coon">เมนคูน</option>
+              <option value="Manx" >แมงซ์</option>
+              <option value="Norwegian Forest" >นอร์วีเจียน ฟอเรสต์</option>
+              <option value="La Perm" >ลาเปิร์ม</option>
+              <option value="Ragdoll">แร็กดอลล์</option>
+              <option value="Siam" >วิเชียรมาศ</option>
+              <option value="Suphalak">ศุภลักษณ์</option>
+              <option value="Scottish Fold">สก็อตติชโฟลด์</option>
+              <option value="Sphynx">สฟิงซ์</option>
+              <option value="American Shorthair">อเมริกันขนสั้น</option>
+              <option value="Abyssinsian">อะบิสซีเนียน</option>
+              <option value="Egyptian Mau">อียิปต์เชียนมัว</option><
+              <option value="Exotic Shorthair">เอ็กโซติกขนสั้น</option>
+
+
+          </select></center>
+
+          
+              <h3 align = "center" id="result">test</h3>
+        </form>
+        <br>
+        <div id = "datashow" >
+          <br><br><br>
+          
+
+          <table>
+            <tr>
+              <td><center><img   id = "img_cat1" src="https://www.readersdigest.ca/wp-content/uploads/sites/14/2011/01/4-ways-cheer-up-depressed-cat.jpg" height= "20" width = "20" ></center></td>
+              <td><center><img   id = "img_cat2" src="https://www.readersdigest.ca/wp-content/uploads/sites/14/2011/01/4-ways-cheer-up-depressed-cat.jpg" height= "20" width = "20" ></center></td>
+              <td><center><img   id = "img_cat3" src="https://www.readersdigest.ca/wp-content/uploads/sites/14/2011/01/4-ways-cheer-up-depressed-cat.jpg" height= "20" width = "20"></center></td>
+            </tr>
+
+          </table>
+            
+          <br><br><br>
+        <table ><tr><td bgcolor="#CCFFFF" style="border: 3px solid white;">
+        <h4  id = 'app' ></h4><p id = 'appshow'></p></br>
+        <h4  id = 'habit' ></h4><p id = 'habitshow'></p></br>
+        <h4  id = 'take' ></h4><p id = 'takeshow'></p></br>
+        </td></tr>
+        </table>
+  
+
+ </div>
+    </div>
+    </div>
+    </div>
+
+     
+</body>
+    
+<footer>
+    <script src="{{ url_for('static', filename='js/main.js') }}" type="text/javascript"></script>    
+    <!-- <script src="{{ url_for('static', filename='js/main2.js') }}" type="text/javascript"></script>  -->
+
+</footer>
+
+
+</html>
+
+
+

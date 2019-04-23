@@ -1,0 +1,139 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="limiter">
+    <div class="container-login100" style="background-image: url({{ url_for('static', filename='images/bg.jpg') }});">
+      <div class="wrap-login100">
+        <form class="login100-form validate-form">
+        <center><P><img src="{{ url_for('static', filename='images/icon4.png') }}" style="width: 80px" /> สายพันธุ์แมว?</P><link rel="shortcut icon" href="{{ url_for('static', filename='images/icon4.png') }}"></center>
+    <center><form id="upload-file2" method="post" enctype="multipart/form-data" align = "center">   
+    <br><video id="video" autoplay></video> 
+    
+    <canvas id="canvas" width="420" height="300"></canvas></center>
+
+    
+    <div id = "photo"><center><div id = "show_pic" style="height: 300px; width: 400px">
+        <br><br><br><br><br><br><br><br><br>
+        <img  src = "http://bilelimmi.com/wp-content/uploads/2017/04/Scottish-Kedi-Foto%C4%9Fraflar%C4%B1-bilelimmi-7.jpg"  class = "show_photo" id="predict_photo" align="left" style="height: 100px; width: 150px"  />
+    </div></center>
+        <!-- <center><img src = "http://bilelimmi.com/wp-content/uploads/2017/04/Scottish-Kedi-Foto%C4%9Fraflar%C4%B1-bilelimmi-7.jpg" width = "480px" height = "360px" class = "show_photo" id="show_photo" /></center>
+     <br><center> -->
+</br>  <center> 
+    <label for="capture" id = "capture-lable"  class="btn btn-info"><i class="fa fa-camera" > </i>
+            ถ่ายรูป
+    </label></center></div>
+
+<center> <div class="radio-group" id = "type_label">
+<input type="radio" id="time" name="type" value = "time" checked>
+
+<label for="time" id = "time_label">เร็ว</label>
+<input type="radio" id="acc" name="type" value = "acc" >
+<label for="acc" id = "acc_label">แม่นยำ</label>
+
+
+  </div></center>
+
+  
+
+
+
+
+<div id = "hide_data">
+<center>
+    <label for="new" id = "new-lable"  class="btn btn-info"><i class="fa fa-camera" > </i>
+        ถ่ายใหม่
+    </label>
+
+
+    <label for="btn-predict1" id = "btn-predict1-lable"  class="btn btn-info"><i class="fa fa-eye" aria-hidden="true"></i> 
+        ทำนาย
+    </label></center>
+
+    <center><label for="btn-predict2" id = "btn-predict2-lable"  class="btn btn-info"><i class="fa fa-eye" aria-hidden="true"></i> 
+        ทำนาย
+    </label></center>
+
+
+        <center></br><label for="imageUpload" id="imageUpload-lable" class="btn btn-info"><i class="fa fa-folder-open"></i>
+            อัพโหลดภาพ
+        </label>
+        
+        &emsp;<label for="takephoto" id = "takephoto-label" class="btn btn-info"><i class="fa fa-camera"></i>
+            ถ่ายรูป
+        </label></center>
+</div> </br>
+            <center><div  class="loader" style="display:none;"></div>
+        <a id = "seedata" title="คลิกดูข้อมูล" href="#" ><div align = "center" id="result" class="predice">
+        <span> </span>
+    </div></a></center>
+
+    </br><center><label for="again" id = "again-lable"  class="btn btn-info"><i class="fa fa-reply-all"></i> 
+            กลับ
+    </label>
+</center>
+
+
+
+    <button type="button"  id="capture" class="btn btn-info" style="visibility:hidden;"></button>
+    <button type="button"  id="new" class="btn btn-info" style="visibility:hidden;"> </button>
+    <button type="button"  id="btn-predict1" class="btn btn-info" style="visibility:hidden;"></i> </button>
+    <button type="button"  id="btn-predict2" class="btn btn-info" style="visibility:hidden;"></button>
+    </form>
+
+
+
+
+            
+
+
+
+<div>
+    <br>
+    <center><form id="upload-file" method="post" enctype="multipart/form-data" align = "center">
+            
+
+        <input type="file" name="file" id="imageUpload" accept=".png, .jpg, .jpeg">
+          
+
+
+
+
+
+
+
+    </form>
+        <center><button id="takephoto" class="btn btn-primary btn-lg" name = "takephoto" style="visibility:hidden;"></button>
+
+          </center>  
+
+<!-- <button type="button" id="download" >ดาวน์โหลด</button>    
+        <a id = "test" download></a> -->
+
+
+            
+
+    <div id="getimg"></div>
+
+
+
+
+<!--     <a id = "seedata" title="คลิกดูข้อมูล" href="#" ><div align = "center" id="result" class="predice">
+        <span> </span>
+    </div></a></br> -->
+
+<!--     <img  src = "http://bilelimmi.com/wp-content/uploads/2017/04/Scottish-Kedi-Foto%C4%9Fraflar%C4%B1-bilelimmi-7.jpg"  class = "show_photo" id="predict_photo" /><br><br> -->
+
+    
+    <button  id="again" onclick="load_()" name = "again" style="visibility:hidden;"></button>
+    
+
+
+</div>
+        </form>
+
+
+      </div>
+
+    </div>
+  </div>
+
+{% endblock %}
